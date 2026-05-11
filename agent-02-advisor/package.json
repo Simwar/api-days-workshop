@@ -1,0 +1,21 @@
+{
+  "name": "doc-advisor",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Doc gap analysis agent that turns questions into prioritised improvement suggestions",
+  "scripts": {
+    "dev": "bun --watch agent/index.ts",
+    "start": "bun agent/index.ts"
+  },
+  "main": "./agent/index.ts",
+  "dependencies": {
+    "@astropods/adapter-mastra": "latest",
+    "@mastra/core": "latest",
+    "@ai-sdk/anthropic": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.1.14",
+    "typescript": "^5.9.3"
+  }
+}

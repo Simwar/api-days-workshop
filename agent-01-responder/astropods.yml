@@ -1,0 +1,33 @@
+spec: blueprint/v1
+name: doc-responder
+
+agent:
+  build:
+    context: .
+    dockerfile: Dockerfile
+  inputs:
+    - name: POSTMAN_COLLECTION_URL
+      datatype: string
+      description: "URL to the Postman collection JSON (public link or raw GitHub URL)"
+      display-as: short-text
+    - name: DOCS_URL
+      datatype: string
+      description: "Base URL of the documentation to reference (raw GitHub URL or public endpoint)"
+      display-as: short-text
+    - name: KV_API_URL
+      datatype: string
+      description: "Base URL of the kv-store agent (e.g. https://kv-store.your-astro-domain.com)"
+      display-as: short-text
+    - name: NAMESPACE
+      datatype: string
+      description: "Shared namespace for this set of agents — must match across responder, advisor, and writer"
+      display-as: short-text
+models:
+  cloud_llm:
+    provider: anthropic
+    models: [claude-sonnet-4-6]
+
+dev:
+  interfaces:
+    messaging:
+      adapters: [web]

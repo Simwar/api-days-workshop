@@ -1,0 +1,21 @@
+{
+  "name": "doc-writer",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Doc drafting agent that turns suggestions into GitHub pull requests",
+  "scripts": {
+    "dev": "bun --watch agent/index.ts",
+    "start": "bun agent/index.ts"
+  },
+  "main": "./agent/index.ts",
+  "dependencies": {
+    "@astropods/adapter-mastra": "latest",
+    "@mastra/core": "latest",
+    "@ai-sdk/anthropic": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.1.14",
+    "typescript": "^5.9.3"
+  }
+}

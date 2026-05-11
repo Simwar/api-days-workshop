@@ -1,0 +1,39 @@
+spec: blueprint/v1
+name: doc-writer
+
+agent:
+  build:
+    context: .
+    dockerfile: Dockerfile
+  inputs:
+    - name: GITHUB_REPO
+      datatype: string
+      description: "GitHub repository to push docs to (e.g. org/repo-name)"
+      display-as: short-text
+    - name: GITHUB_DOCS_PATH
+      datatype: string
+      description: "Base path for documentation files in the repo (e.g. docs)"
+      default: "docs"
+      optional: true
+      display-as: short-text
+    - name: KV_API_URL
+      datatype: string
+      description: "Base URL of the kv-store agent (e.g. https://kv-store.your-astro-domain.com)"
+      display-as: short-text
+    - name: NAMESPACE
+      datatype: string
+      description: "Shared namespace for this set of agents — must match across responder, advisor, and writer"
+      display-as: short-text
+models:
+  cloud_llm:
+    provider: anthropic
+    models: [claude-sonnet-4-6]
+
+integrations:
+  github:
+    provider: github
+
+dev:
+  interfaces:
+    messaging:
+      adapters: [web]
