@@ -5,7 +5,7 @@ Turns prioritised documentation suggestions into actual Markdown files and opens
 ## Role in the pipeline
 
 ```
-suggestions table (written by doc-advisor)
+KV store (suggestions, written by doc-advisor)
           ↓
     [doc-writer]
           ↓
@@ -18,15 +18,15 @@ suggestions table (written by doc-advisor)
 |------|--------|-------------|
 | `GITHUB_REPO` | No | Target repository in `owner/repo` format (e.g. `acme/api-docs`) |
 | `GITHUB_DOCS_PATH` | No | Base directory for documentation files within the repo (default: `docs`) |
-| `DATABASE_URL` | No | PostgreSQL connection string (no password). |
-| `DB_PASSWORD` | Yes | Password for the database user — kept separate so it stays secret |
+| `KV_API_URL` | No | Base URL of the kv-store agent (e.g. `https://kv-store.your-astro-domain.com`) |
+| `NAMESPACE` | No | Shared namespace for this set of agents — must match across responder, advisor, and writer |
 
 The GitHub integration provides a `GITHUB_TOKEN` at runtime — no manual token input required.
 
 ## Tools
 
 ### `get_suggestions`
-Fetches suggestions from the `suggestions` table. Accepts:
+Fetches suggestions from the shared KV store. Accepts:
 - `limit` — number of suggestions to fetch (default 20)
 - `max_priority` — upper bound on priority level; `2` returns only priority 1 and 2 (most critical)
 
@@ -42,15 +42,15 @@ Creates a branch, writes a Markdown file, and opens a pull request. Accepts:
 
 The tool resolves the default branch, creates a uniquely named branch (`docs/auto-{timestamp}`), creates or updates the file, and opens the PR.
 
-## Database
+## Storage
 
-Reads from `suggestions`:
+Reads from the `suggestions` key in the KV store, namespaced by `NAMESPACE`:
 
-```sql
-suggestions(id bigserial, area text, recommendation text, priority int, source_questions int[])
+```json
+[{ "id": 1, "area": "...", "recommendation": "...", "priority": 1, "source_questions": [1, 2] }]
 ```
 
-Requires the schema to be applied before first run — see `db/schema.sql` in the workshop root.
+The KV store is shared with the responder and advisor agents — no schema setup required.
 
 ## How to trigger
 
@@ -79,5 +79,3 @@ The `GITHUB_DOCS_PATH` prefix is prepended automatically if not already present.
 
 - Each suggestion produces exactly one PR so reviewers can approve or reject changes independently.
 - Markdown follows these conventions: lead with the happy path, then edge cases; include working code examples for API interactions; use `##` for sections and `###` for sub-sections; keep prose concise.
-- DB connection uses `prepare: false` (required for Supabase Transaction Pooler) and forces IPv4 resolution at startup.
-- The agent runs on Anthropic by default. To use a local model instead, Astropods provisions an Ollama container (`local_llm` provider, `qwen2.5:14b`) and injects `OLLAMA_BASE_URL` + `OLLAMA_MODEL` automatically — no extra inputs required.
