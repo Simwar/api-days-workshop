@@ -1,3 +1,17 @@
+---
+description: Answers developer questions grounded in a Postman collection and documentation URL. Logs every Q&A pair to a shared KV store for downstream analysis.
+tags: [developer-support, api, documentation, postman, q-and-a]
+authors:
+  - name: Simon Guerrier
+    account: simwar
+capabilities:
+  - Answer developer questions about an API using a Postman collection and documentation URL
+  - Fetch and reference documentation from a raw file URL or multi-path base URL
+  - Log Q&A pairs to a shared KV store before every response
+repository: github:Simwar/api-days-workshop/tree/master/agent-01-responder
+integrations: [anthropic, postman]
+---
+
 # doc-responder
 
 Answers developer questions in real-time, grounded in a Postman collection and documentation URL. Every Q&A pair is persisted to the shared KV store so the advisor agent can analyse patterns later.

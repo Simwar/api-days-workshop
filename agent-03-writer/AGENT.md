@@ -1,3 +1,16 @@
+---
+description: Turns prioritised documentation suggestions into Markdown files and opens pull requests on GitHub. Each suggestion becomes its own independently reviewable PR.
+tags: [documentation, github, pull-requests, writing, api]
+authors:
+  - name: Simon Guerrier
+    account: simwar
+capabilities:
+  - Draft Markdown documentation files from improvement suggestions stored in a KV store
+  - Open a dedicated GitHub pull request for each documentation change
+repository: github:Simwar/api-days-workshop/tree/master/agent-03-writer
+integrations: [anthropic, github]
+---
+
 # doc-writer
 
 Turns prioritised documentation suggestions into actual Markdown files and opens pull requests on GitHub. Each suggestion becomes its own PR so it can be reviewed independently.

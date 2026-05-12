@@ -1,3 +1,16 @@
+---
+description: Analyses accumulated developer questions to identify documentation gaps and writes prioritised, actionable improvement suggestions to a shared KV store.
+tags: [documentation, analysis, developer-experience, api, knowledge-management]
+authors:
+  - name: Simon Guerrier
+    account: simwar
+capabilities:
+  - Analyse developer question patterns to identify documentation gaps and repeated confusion
+  - Write prioritised improvement suggestions to a shared KV store with links to source questions
+repository: github:Simwar/api-days-workshop/tree/master/agent-02-advisor
+integrations: [anthropic]
+---
+
 # doc-advisor
 
 Analyses accumulated developer questions to identify documentation gaps, repeated confusion, and missing coverage. Writes prioritised, actionable improvement suggestions to the shared KV store for the writer agent to act on.
